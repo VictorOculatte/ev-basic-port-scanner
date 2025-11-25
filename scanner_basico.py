@@ -10,34 +10,44 @@ ports = {
     23:  "Telnet (Muito perigoso)"
 }
 
-target = input("Digite o IP do carregador: ")
+while True:
+    target = input("\nDigite o IP do carregador (ou 'sair' para encerrar): ").strip()
 
-print(f"\n[+] Escaneando {target}...\n")
+    if target.lower() == "sair":
+        print("\nEncerrando o programa...")
+        break
 
-found_any = False  # Flag para saber se encontrou algo
+    print(f"\n[+] Escaneando {target}...\n")
 
-for port, desc in ports.items():
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(0.7)
-        result = sock.connect_ex((target, port))
+    achou_algo = False
 
-        if result == 0:
-            found_any = True
-            print(f"PORTA {port} ABERTA → {desc}")
+    for port, desc in ports.items():
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(0.7)
+            result = sock.connect_ex((target, port))
 
-            if port == 23:
-                print("   ⚠ Vulnerabilidade crítica (Telnet ativo)")
-            if port == 502:
-                print("   ⚠ Modbus aberto pode permitir controle remoto")
+            if result == 0:
+                achou_algo = True
+                print(f"PORTA {port} ABERTA → {desc}")
 
-        sock.close()
+                if port == 23:
+                    print("   ⚠ Vulnerabilidade crítica (Telnet ativo)")
+                if port == 502:
+                    print("   ⚠ Modbus aberto pode permitir controle remoto")
 
-    except Exception as e:
-        print(f"Erro ao testar porta {port}: {str(e)}")
+            sock.close()
 
-if not found_any:
-    print("[!] Nenhuma das portas comuns de carregadores EV está aberta.")
+        except:
+            pass
 
-print("\n[+] Scan concluído.")
-input("\nPressione ENTER para sair...")
+    if not achou_algo:
+        print("Nenhuma porta comum de EV Charger está aberta.")
+
+    print("\n[+] Scan concluído.")
+
+    # pergunta se quer fazer outro scan
+    opc = input("\nDeseja testar outro IP? (S/N): ").strip().lower()
+    if opc != "s":
+        print("\nEncerrando o programa...")
+        break
