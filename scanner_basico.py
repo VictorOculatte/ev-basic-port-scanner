@@ -33,3 +33,4 @@ for port, desc in ports.items():
         pass
 
 print("\n[+] Scan concluído.")
+input("\nPressione ENTER para sair...")
