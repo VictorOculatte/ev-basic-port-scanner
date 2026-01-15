@@ -14,21 +14,3 @@ Projeto simples de segurança ofensiva voltado para identificar portas críticas
 
 ## 🧠 Objetivo
 Aprender fundamentos de scanners, footprinting e identificação de exposição em dispositivos IoT/Industrial, essenciais para Red Team.
-
-## ▶ Como executar
-
-No terminal execute:
-
-```bash
-python scanner_basico.py
-
-📂 Estrutura do projeto
-ev-basic-port-scanner/
-│
-├── scanner_basico.py
-└── README.md
-
-📌 Observação
-
-Este projeto é apenas para fins educacionais, simulando cenários comuns em EV Chargers.
-Não execute em dispositivos reais ou redes sem autorização.
